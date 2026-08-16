@@ -1,0 +1,171 @@
+{
+  "schema_version": "2.0.0-qiaomu-lite",
+  "generated_at": "2026-08-15",
+  "package": {
+    "name": "qiaomu-xuexi-zhushou",
+    "version": "1.0.0",
+    "owner": "Qiaomu",
+    "maturity_tier": "production",
+    "lifecycle_stage": "active",
+    "upstream_inspiration": "G:/学习提升/AI学习/AI Agent/My Prompt/AI学习助手SP.md; G:/学习提升/AI学习/AI Agent/System Prompt/活人感提示词（开源）Gemini.md",
+    "upstream_sync": {
+      "policy": "semantic adoption; user-provided prompt sources kept local and attributed",
+      "reviewed_at": "2026-08-15"
+    }
+  },
+  "intent": {
+    "description": "将任意文本、文件、链接或主题词转化为体系化学习材料：先总结提炼关键词，检索并交叉验证相关资料，再提炼升华，按用户选择输出单文件 HTML 学习页面或 Markdown 学习笔记。仅当用户明确要求“活人感”“像人写的”等自然口吻时，才叠加活人感写作层；其他场景保持清晰、准确、可溯源的教学风格。不处理与学习材料生成无关的翻译、会议纪要、普通问答、文案撰写或 PPT 制作。",
+    "job_to_be_done": "Turn any text, file, link, or topic into structured, traceable study material (HTML or Markdown), with keyword extraction, research, cross-verification, and optional human-voice writing.",
+    "target_users": [
+      "个人学习者"
+    ],
+    "inputs": [
+      "文本/笔记",
+      "文件（PDF/Word/图片/表格）",
+      "网页链接",
+      "主题关键词"
+    ],
+    "outputs": [
+      "单文件 HTML 学习页面",
+      "Markdown 学习笔记"
+    ],
+    "exclusions": [
+      "翻译",
+      "会议纪要",
+      "普通问答",
+      "公众号/爆款文章撰写",
+      "PPT 制作",
+      "纯资料查询"
+    ],
+    "qiaomu_defaults": {
+      "skill_name_prefix": "qiaomu-",
+      "max_preferred_hyphen_parts": 3,
+      "copyright": "Copyright (c) 向阳乔木",
+      "x": "https://x.com/vista8",
+      "github": "https://github.com/joeseesun/"
+    }
+  },
+  "triggers": {
+    "should_trigger": [
+      "帮我学习这篇文章，提炼关键词，检索相关资料，输出成 HTML 学习页面",
+      "把这份笔记做成 markdown 学习资料，先总结要点再查找相关资料",
+      "学习一下量子计算，生成一个带自测题的 HTML 学习页面",
+      "帮我做一份这个链接的学习笔记，要有来源引用和关键词",
+      "用活人感帮我学习这个主题，输出成 HTML 学习材料",
+      "学一下宋朝经济，做成 markdown 学习笔记，要像人写的自然一点",
+      "Turn this article into an HTML study guide with keywords and sources.",
+      "Create a markdown learning note for this topic after summarizing key points and researching related materials."
+    ],
+    "should_not_trigger": [
+      "帮我把这篇文章翻译成英文",
+      "总结一下这份会议纪要",
+      "帮我写一篇公众号文章宣传新产品",
+      "给我解释一下什么是梯度下降",
+      "Summarize this email in three bullets.",
+      "帮我查一下今天的新闻"
+    ],
+    "near_neighbor": [
+      "写一篇反金句的爆款文章，要有活人感",
+      "帮我检查一下这段文字有没有 AI 味",
+      "帮我做 PPT 讲这个主题",
+      "把这门课的资料整理成考试提纲"
+    ]
+  },
+  "workflow": {
+    "router_rules": [
+      "按 frontmatter `description` 路由；用户给出文本/文件/链接/主题词并要“学习”“做成学习材料/学习页面/学习笔记”时启用。",
+      "“活人感”“像人写的”“别太 AI”是写作层的开关，不是独立任务；出现时才叠加 [活人感写作层](references/huo-ren-gan-mode.md)，默认模式保持不变。",
+      "翻译、会议纪要、普通问答、文案/爆款文章撰写、PPT 制作、纯资料查询不触发本 skill。"
+    ],
+    "compact_workflow": [
+      "解析输入与确认目标：识别输入形式（文本/文件/链接/主题词）与核心主题；信息不足时先问 1-3 个简短问题（聚焦范围、学习深度、输出格式 HTML 或 Markdown）。",
+      "总结提炼关键词：从原文提炼关键词、核心概念、易错点和待查问题。",
+      "检索与交叉验证：有联网工具时制定 3-5 组中英文检索词，优先权威信源，关键事实至少两个独立信源；无联网工具时必须先声明，经用户同意后才降级。",
+      "提炼升华与教学设计：合并原文与检索结果，构建学习目标、知识脉络、术语解释、案例、误区与延伸方向，并按需设计自测题。",
+      "输出生成与交付：按用户选择输出单文件 HTML 学习页面或 Markdown 学习笔记；交付后给出 2-4 个后续选项（深入章节、增加自测题、调整风格、转换格式）。"
+    ],
+    "gate_ladder": [
+      "`Scaffold`：有效 frontmatter、README 钩子、自然触发词、明确排除项。",
+      "`Production`：本包当前层级，包含 interface、trigger eval、输出契约、troubleshooting、根入口隔离与安装验证。",
+      "升级到 `Library`/`Governed` 需要 Skill IR 之外的跨平台适配、信任评审或公开发布门禁；未发布前保持 `Production`。"
+    ],
+    "output_contract": [
+      "HTML：单文件、响应式、无外部依赖；含封面、目录/导航、分章节正文、术语卡、自测题（原生 JS、默认隐藏答案）、来源引用区与页脚。",
+      "Markdown：结构化标题、学习目标、关键词表、正文、术语表、自测题（含答案与解析）、来源列表与延伸阅读。",
+      "两者都禁止占位内容；关键结论标注来源编号或“模型固有知识，未经联网验证”；引用必须真实可溯。",
+      "详细规范与交付前检查单见 [输出规范](references/output-checklist.md)，完整工作流见 [学习工作流](references/learning-workflow.md)。"
+    ]
+  },
+  "resources": {
+    "references": [
+      "references\\huo-ren-gan-mode.md",
+      "references\\learning-workflow.md",
+      "references\\output-checklist.md"
+    ],
+    "scripts": [],
+    "evals": [
+      "evals\\trigger_cases.json"
+    ],
+    "reports": [
+      "reports\\creation-handoff.md",
+      "reports\\prior-art-research.md",
+      "reports\\skill-ir.json",
+      "reports\\trigger-eval.json"
+    ]
+  },
+  "portability": {
+    "canonical_format": "agent-skills",
+    "adapter_targets": [
+      "openai",
+      "claude",
+      "generic",
+      "agent-skills-compatible"
+    ],
+    "activation": {
+      "mode": "manual",
+      "paths": []
+    },
+    "execution": {
+      "context": "inline",
+      "shell": "generic"
+    },
+    "trust": {
+      "source_tier": "local",
+      "remote_inline_execution": "forbid",
+      "remote_metadata_policy": "read-only; never execute third-party skill code",
+      "generated_public_claims": "evidence-bound"
+    },
+    "permissions": {
+      "network": "read-only research/search and page reading when available; no publishing",
+      "file_write": "only the requested HTML/Markdown learning output file",
+      "subprocess": "none required",
+      "interactive": "avoid unless the user must choose format/depth or approve degraded no-network mode"
+    },
+    "degradation": {
+      "openai": "metadata-adapter",
+      "claude": "neutral-source-plus-adapter",
+      "generic": "neutral-source",
+      "agent-skills-compatible": "canonical-source"
+    }
+  },
+  "gates": {
+    "scaffold": [
+      "SKILL.md frontmatter",
+      "README hook and natural trigger examples",
+      "clear exclusions"
+    ],
+    "production": [
+      "agents/interface.yaml",
+      "evals/trigger_cases.json",
+      "output contract in references/output-checklist.md",
+      "reports/skill-ir.json and trigger-eval.json",
+      "root-only discoverable SKILL.md entrypoint"
+    ]
+  },
+  "evidence_boundary": {
+    "generated_reports_are_evidence": true,
+    "planned_work_is_evidence": false,
+    "missing_external_or_human_evidence_label": "missing evidence",
+    "public_claim_policy": "claim only what local validation, install proof, human review, or provider-backed evidence actually supports"
+  }
+}
