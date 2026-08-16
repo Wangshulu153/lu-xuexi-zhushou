@@ -1,0 +1,90 @@
+{
+  "recommended_threshold": 0.35,
+  "description_required_concepts": ["learning", "material_generation", "keyword_summary", "research"],
+  "positive_concepts": {
+    "learning": ["学习", "学一下", "learn", "study", "learning"],
+    "material_generation": ["HTML", "html", "Markdown", "markdown", "学习页面", "学习材料", "学习笔记", "学习资料", "study guide", "study material", "learning note", "学习内容"],
+    "keyword_summary": ["关键词", "总结", "提炼", "摘要", "要点", "keyword", "keywords", "summarize", "summary", "key points"],
+    "research": ["检索", "查资料", "查找资料", "搜索", "来源", "引用", "research", "相关资料", "检索资料", "交叉验证"],
+    "human_style": ["活人感", "像人写的", "像真人", "别太AI", "更口语", "human-like", "human touch", "更自然"]
+  },
+  "negative_patterns": ["翻译一下", "翻译成", "会议纪要", "邮件", "公众号文章", "爆款文章", "做PPT", "做个PPT", "AI味", "只解释", "just explain", "summarize this email", "translate"],
+  "should_trigger": [
+    {
+      "text": "帮我学习这篇文章，提炼关键词，检索相关资料，输出成 HTML 学习页面",
+      "family": "cn_full_workflow"
+    },
+    {
+      "text": "把这份笔记做成 markdown 学习资料，先总结要点再查找相关资料",
+      "family": "cn_markdown_note"
+    },
+    {
+      "text": "学习一下量子计算，生成一个带自测题的 HTML 学习页面",
+      "family": "cn_html_topic"
+    },
+    {
+      "text": "帮我做一份这个链接的学习笔记，要有来源引用和关键词",
+      "family": "cn_link_notes"
+    },
+    {
+      "text": "用活人感帮我学习这个主题，输出成 HTML 学习材料",
+      "family": "cn_human_style_html"
+    },
+    {
+      "text": "学一下宋朝经济，做成 markdown 学习笔记，要像人写的自然一点",
+      "family": "cn_human_style_md"
+    },
+    {
+      "text": "Turn this article into an HTML study guide with keywords and sources.",
+      "family": "en_html_guide"
+    },
+    {
+      "text": "Create a markdown learning note for this topic after summarizing key points and researching related materials.",
+      "family": "en_md_workflow"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "帮我把这篇文章翻译成英文",
+      "family": "translate_only"
+    },
+    {
+      "text": "总结一下这份会议纪要",
+      "family": "minutes_summary"
+    },
+    {
+      "text": "帮我写一篇公众号文章宣传新产品",
+      "family": "copywriting_only"
+    },
+    {
+      "text": "给我解释一下什么是梯度下降",
+      "family": "quick_explain"
+    },
+    {
+      "text": "Summarize this email in three bullets.",
+      "family": "email_summary"
+    },
+    {
+      "text": "帮我查一下今天的新闻",
+      "family": "news_only"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "写一篇反金句的爆款文章，要有活人感",
+      "family": "article_engine"
+    },
+    {
+      "text": "帮我检查一下这段文字有没有 AI 味",
+      "family": "ai_style_review"
+    },
+    {
+      "text": "帮我做 PPT 讲这个主题",
+      "family": "slides_deck"
+    },
+    {
+      "text": "把这门课的资料整理成考试提纲",
+      "family": "outline_only"
+    }
+  ]
+}
