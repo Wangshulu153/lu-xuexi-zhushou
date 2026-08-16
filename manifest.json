@@ -1,0 +1,30 @@
+{
+  "name": "qiaomu-xuexi-zhushou",
+  "version": "1.0.0",
+  "owner": "Qiaomu",
+  "updated_at": "2026-08-15",
+  "status": "active",
+  "maturity_tier": "production",
+  "lifecycle_stage": "active",
+  "context_budget_tier": "production",
+  "release_gates": ["validate_skill.py", "trigger_eval.py", "export_skill_ir.py"],
+  "upstream_inspiration": "G:/学习提升/AI学习/AI Agent/My Prompt/AI学习助手SP.md; G:/学习提升/AI学习/AI Agent/System Prompt/活人感提示词（开源）Gemini.md",
+  "upstream_sync": {
+    "policy": "semantic adoption; user-provided prompt sources kept local and attributed",
+    "reviewed_at": "2026-08-15"
+  },
+  "intent": {
+    "job_to_be_done": "Turn any text, file, link, or topic into structured, traceable study material (HTML or Markdown), with keyword extraction, research, cross-verification, and optional human-voice writing.",
+    "target_users": ["个人学习者"],
+    "inputs": ["文本/笔记", "文件（PDF/Word/图片/表格）", "网页链接", "主题关键词"],
+    "outputs": ["单文件 HTML 学习页面", "Markdown 学习笔记"],
+    "exclusions": ["翻译", "会议纪要", "普通问答", "公众号/爆款文章撰写", "PPT 制作", "纯资料查询"]
+  },
+  "qiaomu_defaults": {
+    "skill_name_prefix": "qiaomu-",
+    "max_preferred_hyphen_parts": 3,
+    "copyright": "Copyright (c) 向阳乔木",
+    "x": "https://x.com/vista8",
+    "github": "https://github.com/joeseesun/"
+  }
+}
