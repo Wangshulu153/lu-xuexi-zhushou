@@ -1,0 +1,48 @@
+interface:
+  display_name: "AI 学习助手"
+  short_description: "从任意输入提炼关键词、检索资料并生成可离线学习的 HTML/Markdown 学习材料；仅按需启用活人感写作层"
+  default_prompt: |
+    Use $qiaomu-xuexi-zhushou as the learning-assistant authority when the user asks to turn text, files, links, or topics into structured study material. Confirm output format (HTML or Markdown) and learning depth when ambiguous; otherwise follow references/learning-workflow.md. Extract keywords and key points, research and cross-verify sources when network tools exist, then refine the material. Activate the human-voice layer from references/huo-ren-gan-mode.md only when the user explicitly asks for 活人感 or human-like wording; otherwise keep the clear, traceable teaching tone. Never fabricate sources, and mark unverified knowledge explicitly.
+  examples:
+    - "帮我学习这篇文章，提炼关键词，检索相关资料，输出成 HTML 学习页面"
+    - "把这份笔记做成 markdown 学习资料，先总结要点再查找相关资料"
+    - "用活人感帮我学习这个主题，输出成 HTML 学习材料"
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+    - "agent-skills-compatible"
+  activation:
+    mode: "manual"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "generic"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "read-only; never execute third-party skill code"
+    generated_public_claims: "evidence-bound"
+  permissions:
+    network: "read-only research/search and page reading when available; no publishing"
+    file_write: "only the requested HTML/Markdown learning output file"
+    subprocess: "none required"
+    interactive: "avoid unless the user must choose format/depth or approve degraded no-network mode"
+  degradation:
+    openai: "metadata-adapter"
+    claude: "neutral-source-plus-adapter"
+    generic: "neutral-source"
+    agent-skills-compatible: "canonical-source"
+gates:
+  scaffold:
+    - "SKILL.md frontmatter"
+    - "README hook and natural trigger examples"
+    - "clear exclusions"
+  production:
+    - "agents/interface.yaml"
+    - "evals/trigger_cases.json"
+    - "output contract in references/output-checklist.md"
+    - "reports/skill-ir.json and trigger-eval.json"
+    - "root-only discoverable SKILL.md entrypoint"
